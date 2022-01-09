@@ -1,0 +1,12 @@
+# setting up base dependencies
+FROM node:17
+ #declaring folder name to work with "APP and copying json file to it"
+WORKDIR /app
+COPY package*.json .
+# installing all dependecies
+RUN npm install
+# copy everything to app
+COPY . .
+# run app
+CMD npm start
+
