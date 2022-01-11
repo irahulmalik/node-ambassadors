@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { createConnection } from "typeorm";
+import { routes } from "./routes";
 //connecting to sql using type orm
 createConnection().then( () => {
 
@@ -10,6 +11,8 @@ createConnection().then( () => {
     app.use(cors({
         origin:['http://localhost:4200']
     }));
+
+    routes(app);
 
     app.get('/', (req :Request, res: Response)=>{
         res.send("Hello World")
