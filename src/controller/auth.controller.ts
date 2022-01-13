@@ -3,6 +3,7 @@ import { getRepository } from "typeorm";
 import { User } from "../entity/user_entity";
 // import bcryptjs from "bcryptjs";
 import bcryptjs from 'bcryptjs';
+import { sign } from "jsonwebtoken";
 
 
 export const register = async (req:Request, res:Response) => {
@@ -23,4 +24,22 @@ export const register = async (req:Request, res:Response) => {
         });
     
     res.send(user)
+}
+
+export const login = async(req:Request, res:Response) =>{
+    const user = await getRepository(User).findOne({email:req.body.email})
+
+    if(!user){
+        return res.status(400).send({message:"invalid credentials"})
+    }
+    
+    if(!bcryptjs.compare(req.body.password, user.password)){
+        return res.status(400).send({message:"invalid credentials"})
+    }
+
+    const token = sign({
+        id: user.id,
+    },"secret"
+    )
+    res.send(token)
 }

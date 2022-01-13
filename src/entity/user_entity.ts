@@ -15,7 +15,7 @@ export class User{
     email: String;
 
     @Column()
-    password: String;
+    password: string;
 
     @Column()
     is_ambassdor: boolean;
