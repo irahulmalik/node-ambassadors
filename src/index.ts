@@ -2,6 +2,12 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { createConnection } from "typeorm";
 import { routes } from "./routes";
+import dotenv from 'dotenv'
+
+//configureing env file
+dotenv.config();
+
+
 //connecting to sql using type orm
 createConnection().then( () => {
 

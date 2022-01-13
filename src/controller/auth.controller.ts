@@ -40,8 +40,8 @@ export const login = async(req:Request, res:Response) =>{
 
     const token = sign({
         id: user.id,
-    },"secret"
-    )
+    },process.env.SECRET_KEY
+    );
 
     //storing json token in cookie
     res.cookie("jwt",token,(
