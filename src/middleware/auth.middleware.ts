@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { User } from "../entity/user_entity";
 
-export const AuthMiddleWare =async (req:Request, res:Response) => {
+export const AuthMiddleWare =async (req:Request, res:Response, next: Function) => {
     try{
         const jwt = req.cookies("jwt");
         //verify cookie to validate if user is authenticated
@@ -13,7 +13,7 @@ export const AuthMiddleWare =async (req:Request, res:Response) => {
             return res.status(401).send({message:"unauthenticated"})
         }
         // if we need user in next function too we can send it like this
-        res["user"] = await getRepository(User).findOne(payload.id);
+        req["user"] = await getRepository(User).findOne(payload.id);
 
         // we dont send user but put next() to execute next function
         // res.send(user);
